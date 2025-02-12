@@ -9,19 +9,20 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="/db-assessment/competencies/{{$competency->id}}" method="POST">
+                    <form action="/db-assessment/competencies/{{ $competency->id }}" method="POST">
                         @method('put')
                         @csrf
                         <div class="form-group">
                             <label for="name">Nama Kompetensi</label>
-                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Nama Kompetensi" name="name" value="{{$competency->name}}">
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
+                                placeholder="Nama Kompetensi" name="name" value="{{ $competency->name }}">
                             @error('name')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div style="text-align: right">
                             <a href="/db-assessment/competencies" class="btn btn-default">Kembali</a>
-                            <button type="submit" class="btn btn-primary">Ubah</button>
+                            <button type="submit" class="btn btn-info">Ubah</button>
                         </div>
                     </form>
                 </div>

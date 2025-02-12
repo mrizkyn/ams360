@@ -6,15 +6,15 @@
 
 @section('classes_body', 'login-page')
 
-@php( $password_email_url = View::getSection('password_email_url') ?? config('adminlte.password_email_url', 'password/email') )
-@php( $dashboard_url = View::getSection('dashboard_url') ?? config('adminlte.dashboard_url', 'home') )
+@php($password_email_url = View::getSection('password_email_url') ?? config('adminlte.password_email_url', 'password/email'))
+@php($dashboard_url = View::getSection('dashboard_url') ?? config('adminlte.dashboard_url', 'home'))
 
 @if (config('adminlte.use_route_url', false))
-    @php( $password_email_url = $password_email_url ? route($password_email_url) : '' )
-    @php( $dashboard_url = $dashboard_url ? route($dashboard_url) : '' )
+    @php($password_email_url = $password_email_url ? route($password_email_url) : '')
+    @php($dashboard_url = $dashboard_url ? route($dashboard_url) : '')
 @else
-    @php( $password_email_url = $password_email_url ? url($password_email_url) : '' )
-    @php( $dashboard_url = $dashboard_url ? url($dashboard_url) : '' )
+    @php($password_email_url = $password_email_url ? url($password_email_url) : '')
+    @php($dashboard_url = $dashboard_url ? url($dashboard_url) : '')
 @endif
 
 @section('body')
@@ -33,7 +33,9 @@
                 <form action="{{ $password_email_url }}" method="post">
                     {{ csrf_field() }}
                     <div class="input-group mb-3">
-                        <input type="email" name="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" value="{{ old('email') }}" placeholder="{{ __('adminlte::adminlte.email') }}" autofocus>
+                        <input type="email" name="email"
+                            class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" value="{{ old('email') }}"
+                            placeholder="{{ __('adminlte::adminlte.email') }}" autofocus>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -45,7 +47,7 @@
                             </div>
                         @endif
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block btn-flat">
+                    <button type="submit" class="btn btn-info btn-block btn-flat">
                         {{ __('adminlte::adminlte.send_password_reset_link') }}
                     </button>
                 </form>

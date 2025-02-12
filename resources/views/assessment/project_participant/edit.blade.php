@@ -11,11 +11,11 @@
             <b>Rater Proyek</b>
         </div>
         <div class="card-body">
-            <form action="/assessment/project-participants/{{$projectParticipant->id}}" method="POST">
+            <form action="/assessment/project-participants/{{ $projectParticipant->id }}" method="POST">
                 @csrf
                 @method('PUT')
                 <table class="table table-bordered table-responsive">
-                    <thead class="thead-dark">
+                    <thead>
                         <tr>
                             <th>No</th>
                             <th>NIK</th>
@@ -31,25 +31,29 @@
                     <tbody>
                         <tr>
                             <td>1</td>
-                            <td>{{$projectParticipant->participant->identity_number}}</td>
-                            <td>{{$projectParticipant->participant->name}}</td>
-                            <td>{{$projectParticipant->participant->position->name}}</td>
-                            <td>{{$projectParticipant->participant->division->name}}</td>
-                            <td>{{$projectParticipant->participant->departement->name}}</td>
+                            <td>{{ $projectParticipant->participant->identity_number }}</td>
+                            <td>{{ $projectParticipant->participant->name }}</td>
+                            <td>{{ $projectParticipant->participant->position->name }}</td>
+                            <td>{{ $projectParticipant->participant->division->name }}</td>
+                            <td>{{ $projectParticipant->participant->departement->name }}</td>
                             <td>
-                                <input type="number" class="form-control" maxlength="2" name="superior_number" value="{{$projectParticipant->superior_number}}" required>
+                                <input type="number" class="form-control" maxlength="2" name="superior_number"
+                                    value="{{ $projectParticipant->superior_number }}" required>
                             </td>
                             <td>
-                                <input type="number" class="form-control" maxlength="2" name="collegue_number" value="{{$projectParticipant->collegue_number}}" required>
+                                <input type="number" class="form-control" maxlength="2" name="collegue_number"
+                                    value="{{ $projectParticipant->collegue_number }}" required>
                             </td>
                             <td>
-                                <input type="number" class="form-control" maxlength="2" name="subordinate_number" value="{{$projectParticipant->subordinate_number}}" required>
+                                <input type="number" class="form-control" maxlength="2" name="subordinate_number"
+                                    value="{{ $projectParticipant->subordinate_number }}" required>
                             </td>
                         </tr>
                     </tbody>
                 </table>
                 <div class="form-group text-right">
-                    <a href="\assessment\projects\{{$projectParticipant->project->id}}" class="btn btn-default">Kembali</a>
+                    <a href="\assessment\projects\{{ $projectParticipant->project->id }}"
+                        class="btn btn-default">Kembali</a>
                     <input class="btn btn-info" type="submit" value="Ubah">
                 </div>
             </form>
@@ -59,12 +63,12 @@
 
 @section('css')
     <style>
-        .fit{
+        .fit {
             width: 10%;
         }
 
         @media only screen and (max-width: 768px) {
-            .fit{
+            .fit {
                 width: 15%;
             }
         }

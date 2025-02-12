@@ -14,7 +14,7 @@ class AddBusinessFieldCompanies extends Migration
     public function up()
     {
         Schema::table('companies', function (Blueprint $table) {
-            $table->integer('business_field_id')->after('name'); 
+            $table->integer('business_field_id')->nullable()->after('name');
         });
     }
 

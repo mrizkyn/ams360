@@ -10,91 +10,99 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-              <form action="/db-assessment/recapsPrint" method="POST" id="participant-form">
-                @csrf
-                <div class="card-body">
-                    <table class="table table-bordered" id="participant-table">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th style="width: 5%; text-align: center;"><input type="checkbox" id="select-all-participant"></th>
-                                <th style="width: 50%">Nama Asesi</th>
-                                <th style="width: 45%">Jabatan</th>
-                            </tr>
-                        </thead>
-                        <tbody id="participant-table-data">
-                            @foreach($participants as $participant)
+                <form action="/db-assessment/recapsPrint" method="POST" id="participant-form">
+                    @csrf
+                    <div class="card-body">
+                        <table class="table table-bordered" id="participant-table">
+                            <thead>
                                 <tr>
-                                <td class="text-center"><input type="checkbox" value="{{$participant->id}}" name="participant_ids[]"></td>
-                                <td>{{$participant->participant->name}}</td>
-                                <td>{{$participant->participant->position['name']}}</td>
+                                    <th style="width: 5%; text-align: center;"><input type="checkbox"
+                                            id="select-all-participant"></th>
+                                    <th style="width: 50%">Nama Asesi</th>
+                                    <th style="width: 45%">Jabatan</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-                <div id="chartPie" class="chart"></div>
-                <div class="card-footer">
-                  <div class="form-group text-right">
-                    <a href="/db-assessment/recapsPrint" class="btn btn-default">Kembali</a>
-                    <button type="button" class="btn btn-info" id="cetak">Cetak</button>
-                  </div>
-                </div>
-              </form>
+                            </thead>
+                            <tbody id="participant-table-data">
+                                @foreach ($participants as $participant)
+                                    <tr>
+                                        <td class="text-center"><input type="checkbox" value="{{ $participant->id }}"
+                                                name="participant_ids[]"></td>
+                                        <td>{{ $participant->participant->name }}</td>
+                                        <td>{{ $participant->participant->position['name'] }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="chartPie" class="chart"></div>
+                    <div class="card-footer">
+                        <div class="form-group text-right">
+                            <a href="/db-assessment/recapsPrint" class="btn btn-default">Kembali</a>
+                            <button type="button" class="btn btn-info" id="cetak">Cetak</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 @stop
 
 @section('css')
-<style type="text/css">
-    .chart{
-        display: none;
-    }
-</style>
+    <style type="text/css">
+        .chart {
+            display: none;
+        }
+    </style>
 @endsection
 
 @section('js')
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script>
         $(document).ready(function() {
-            $("#select-all-participant").click(function(e){
+            $("#select-all-participant").click(function(e) {
                 var table = $(e.target).closest('#participant-table');
-                $('td input:checkbox',table).prop('checked',this.checked).change();
+                $('td input:checkbox', table).prop('checked', this.checked).change();
             });
 
             $('#cetak').click(function() {
-                $.post("{{url('/db-assessment/showChart')}}", $('#participant-form').serialize())
-                .done(function(results) {
-                    google.charts.load("45.2", {packages:['corechart']});
-
-                    google.charts.setOnLoadCallback(pieChart);
-
-                    function pieChart() {
-                        var pieData = [['Rekomendasi', 'Persentase']];
-
-                        results.forEach(function(result){
-                            pieData.push([result.recommendation, parseFloat(result.percent)])
+                $.post("{{ url('/db-assessment/showChart') }}", $('#participant-form').serialize())
+                    .done(function(results) {
+                        google.charts.load("45.2", {
+                            packages: ['corechart']
                         });
 
+                        google.charts.setOnLoadCallback(pieChart);
 
-                        var data = google.visualization.arrayToDataTable(pieData);
+                        function pieChart() {
+                            var pieData = [
+                                ['Rekomendasi', 'Persentase']
+                            ];
 
-                        var options = {
-                            width:500,
-                            height:400,
-                        };
+                            results.forEach(function(result) {
+                                pieData.push([result.recommendation, parseFloat(result
+                                    .percent)])
+                            });
 
-                        var chart = new google.visualization.PieChart(document.getElementById('chartPie'));
 
-                        google.visualization.events.addListener(chart, 'ready', function () {
-                        $('#pie_chart').val(chart.getImageURI());
-                        $('#percent').val(JSON.stringify(results));
+                            var data = google.visualization.arrayToDataTable(pieData);
 
-                        document.getElementById('participant-form').submit();
-                    });
+                            var options = {
+                                width: 500,
+                                height: 400,
+                            };
 
-                        chart.draw(data, options);
-                    }
+                            var chart = new google.visualization.PieChart(document.getElementById(
+                                'chartPie'));
+
+                            google.visualization.events.addListener(chart, 'ready', function() {
+                                $('#pie_chart').val(chart.getImageURI());
+                                $('#percent').val(JSON.stringify(results));
+
+                                document.getElementById('participant-form').submit();
+                            });
+
+                            chart.draw(data, options);
+                        }
                     });
             })
         });

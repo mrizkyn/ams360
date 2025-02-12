@@ -1,3 +1,47 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ===== Custom Right Sidebar ===== */
+.control-sidebar {
+    background: linear-gradient(
+        135deg,
+        #2c3e50,
+        #34495e
+    ) !important; /* Gradasi warna modern */
+    color: #ecf0f1 !important; /* Warna teks */
+    padding: 15px;
+}
+
+/* ===== Ubah Warna Icon Sidebar Kanan ===== */
+.control-sidebar .nav-link i {
+    color: #1abc9c !important; /* Warna hijau modern */
+}
+
+/* ===== Ubah Warna Link di Sidebar Kanan ===== */
+.control-sidebar a {
+    color: #ecf0f1 !important; /* Warna putih */
+    transition: all 0.3s ease-in-out;
+}
+
+.control-sidebar a:hover {
+    color: #f1c40f !important; /* Warna kuning cerah saat hover */
+}
+
+/* ===== Scrollbar Kustom ===== */
+.control-sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.control-sidebar::-webkit-scrollbar-track {
+    background: #2c3e50; /* Warna track */
+}
+
+.control-sidebar::-webkit-scrollbar-thumb {
+    background: #1abc9c; /* Warna scrollbar */
+    border-radius: 10px;
+}
+
+.control-sidebar::-webkit-scrollbar-thumb:hover {
+    background: #f1c40f; /* Warna saat hover */
+}

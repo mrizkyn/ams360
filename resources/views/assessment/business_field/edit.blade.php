@@ -13,16 +13,17 @@
                         @csrf
                         @method('PATCH')
                         <div class="form-group">
-                          <label for="name">Nama Bidang Usaha</label>
-                          <input type="hidden" value="{{ $id }}">
-                          <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"  name="name" value="{{ $name }}">
-                          @error('name')
-                            <div class="alert alert-danger" style="margin-top: 10px">{{$message}}</div>
-                          @enderror
+                            <label for="name">Nama Bidang Usaha</label>
+                            <input type="hidden" value="{{ $id }}">
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
+                                name="name" value="{{ $name }}">
+                            @error('name')
+                                <div class="alert alert-danger" style="margin-top: 10px">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div style="text-align: right">
                             <a href="/assessment/business-fields" class="btn btn-default">Kembali</a>
-                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <button type="submit" class="btn btn-info">Simpan</button>
                         </div>
                     </form>
                 </div>

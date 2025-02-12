@@ -7,6 +7,105 @@
 @stop
 
 @section('content')
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card text-white" style="background-color: #3674B5;">
+                <div class="card-body text-center">
+                    <i class="fas fa-users fa-4x"></i>
+                    <h5 class="card-title mt-2">Jumlah User</h5>
+                    <h3>0</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white" style="background-color: #578FCA;">
+                <div class="card-body text-center">
+                    <i class="fas fa-building fa-4x"></i>
+                    <h5 class="card-title mt-2">Jumlah Perusahaan</h5>
+                    <h3>0</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-dark" style="background-color: #A1E3F9;">
+                <div class="card-body text-center">
+                    <i class="fas fa-folder-open fa-4x"></i>
+                    <h5 class="card-title mt-2">Jumlah Proyek</h5>
+                    <h3>0</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <div class="card text-dark" style="background-color: #90C8E0;">
+                <div class="card-body text-center">
+                    <i class="fas fa-tasks fa-4x"></i>
+                    <h5 class="card-title mt-2">Proyek Aktif</h5>
+                    <h3>0</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white" style="background-color: #2F6690;">
+                <div class="card-body text-center">
+                    <i class="fas fa-check-circle fa-4x"></i>
+                    <h5 class="card-title mt-2">Proyek Selesai</h5>
+                    <h3>0</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white" style="background-color: #4A86B3;">
+                <div class="card-body text-center">
+                    <i class="fas fa-exclamation-triangle fa-4x"></i>
+                    <h5 class="card-title mt-2">Proyek Hampir Deadline</h5>
+                    <h3>0</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <div class="card text-white" style="background-color: #78A9D9;">
+                <div class="card-body text-center">
+                    <i class="fas fa-user-graduate fa-4x"></i>
+                    <h5 class="card-title mt-2">Jumlah Asesi</h5>
+                    <h3>0</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-dark" style="background-color: #B6D8E6;">
+                <div class="card-body text-center">
+                    <i class="fas fa-times-circle fa-4x"></i>
+                    <h5 class="card-title mt-2">Asesi Belum di Nilai</h5>
+                    <h3>0</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white" style="background-color: #92C6D9;">
+                <div class="card-body text-center">
+                    <i class="fas fa-user-tie fa-4x"></i>
+                    <h5 class="card-title mt-2">Jumlah Rater</h5>
+                    <h3>0</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <div class="card text-dark" style="background-color: #A5D4E0;">
+                <div class="card-body text-center">
+                    <i class="fas fa-hourglass-half fa-4x"></i>
+                    <h5 class="card-title mt-2">Rater Belum Menilai</h5>
+                    <h3>0</h3>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-12">
             <div class="card">

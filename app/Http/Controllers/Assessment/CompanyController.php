@@ -28,7 +28,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        $business = BusinessField::orderBy('name', 'ASC')->get();
+        // $business = BusinessField::orderBy('name', 'ASC')->get();
 
         return view('assessment.company.create' , compact('business'));
     }
@@ -43,13 +43,13 @@ class CompanyController extends Controller
     {
         $validatedData = $request->validate([
             'namaPerusahaan' => 'required|unique:companies,name',
-            'bidangIndustri' => 'required',
+            // 'bidangIndustri' => 'required',
             'alamatPerusahaan' => 'required',
             'kotaPerusahaan' => 'required',
         ], [
             'namaPerusahaan.unique' => 'Nama Perusahaan sudah ada',
             'namaPerusahan.required' => 'Nama Perusahan wajib diisi',
-            'bidangIndustri.required' => 'Bidang Usaha wajib diisi',
+            // 'bidangIndustri.required' => 'Bidang Usaha wajib diisi',
             'alamatPerusahaan.required' => 'Alamat Perusahaan wajib diisi',
             'kotaPerusahaan' => 'Kota Perusahaan wajib diisi'
         ]);
@@ -104,13 +104,13 @@ class CompanyController extends Controller
     {
         $validatedData = $request->validate([
             'namaPerusahaan' => 'required|unique:companies,name,'.$id,
-            'bidangIndustri' => 'required',
+            // 'bidangIndustri' => 'required',
             'alamatPerusahaan' => 'required',
             'kotaPerusahaan' => 'required',
         ], [
             'namaPerusahaan.unique' => 'Nama Perusahaan sudah ada',
             'namaPerusahan.required' => 'Nama Perusahan wajib diisi',
-            'bidangIndustri.required' => 'Bidang Usaha wajib diisi',
+            // 'bidangIndustri.required' => 'Bidang Usaha wajib diisi',
             'alamatPerusahaan.required' => 'Alamat Perusahaan wajib diisi',
             'kotaPerusahaan' => 'Kota Perusahaan wajib diisi'
         ]);
@@ -148,7 +148,7 @@ class CompanyController extends Controller
         ->addColumn('action', function($company){
             $csrf = csrf_token();
             return '
-                <a href="" class="btn btn-sm btn-default show" id="'.$company->id.'" data-toggle="modal" data-target="#show-modal" data-nama="'.$company->name.'" data-bf="'.$company->businessField->name.'" data-address="'.$company->address.'" data-city="'.$company->city.'" data-phone="'.$company->phone.'" data-picname="'.$company->pic_name.'" data-picphone="'.$company->pic_phone.'" data-picmail="'.$company->pic_mail.'">
+                <a href="" class="btn btn-sm btn-default show" id="'.$company->id.'" data-toggle="modal" data-target="#show-modal" data-nama="'.$company->name.'" " data-address="'.$company->address.'" data-city="'.$company->city.'" data-phone="'.$company->phone.'" data-picname="'.$company->pic_name.'" data-picphone="'.$company->pic_phone.'" data-picmail="'.$company->pic_mail.'">
                     <i class="fas fa-eye"></i> Lihat
                 </a>
 

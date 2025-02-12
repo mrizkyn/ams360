@@ -86,4 +86,13 @@ Route::middleware(['auth'])->prefix('data')->group(function () {
     Route::get('assessment-participant-data', [ParticipantController::class, 'participantData']);
     Route::get('assessment-competency-result-by-project-participant/{projectParticipantId}', [ReportAssessmentController::class, 'getAssessmentCompetencyResult']);
     Route::get('assessment-key-behavior-result-by-project-participant/{projectParticipantId}', [ReportAssessmentController::class, 'getAssessmentKeyBehaviorResult']);
+    Route::get('assessment-position-data', [PositionController::class, 'positionData']);
+    Route::get('assessment-division-data', [DivisionController::class, 'divisionData']);
+    Route::get('assessment-development-data', [DevelopmentSourceController::class, 'developmentData']);
+    Route::get('assessment-departement-data', [DepartementController::class, 'departementData']);
+    Route::get('assessment-behavior-data/{id}', [BehaviorController::class, 'behaviorData']);
+    Route::get('assessment-definition-data/{id}', [CompetenceController::class, 'definitionData']);
+    Route::get('assessment-user-data', [UserController::class, 'usersData']);
+    Route::get('assessment-user-detail/{id}', [UserController::class, 'userDetail']);
+    Route::get('assessment-detail-participant/{id}', [ParticipantController::class, 'participantDetail']);
 });

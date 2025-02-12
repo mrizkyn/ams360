@@ -22,8 +22,12 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="namaTargetJob">Nama Target Job</label>
-                            <input id="namaTargetJob" type="text" class="form-control @error('namaTargetJob') is-invalid @enderror" placeholder="Masukkan nama target job" name="namaTargetJob" autofocus value="{{ old('namaTargetJob') }}">
-                            <small>*Note : Untuk Target Job yang memiliki nama yang sama namun dengan Kompetensi yang berbeda, Penamaan disesuaikan oleh perusahaan</small>
+                            <input id="namaTargetJob" type="text"
+                                class="form-control @error('namaTargetJob') is-invalid @enderror"
+                                placeholder="Masukkan nama target job" name="namaTargetJob" autofocus
+                                value="{{ old('namaTargetJob') }}">
+                            <small>*Note : Untuk Target Job yang memiliki nama yang sama namun dengan Kompetensi yang
+                                berbeda, Penamaan disesuaikan oleh perusahaan</small>
                             @error('namaTargetJob')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -33,17 +37,19 @@
 
                         <label for="competency-table">Kompetensi</label>
                         <table class="table table-bordered" id="competency-table">
-                            <thead class="thead-dark">
+                            <thead>
                                 <tr>
-                                    <th style="width: 5%; text-align: center;"><input type="checkbox" id="select-all-competency"></th>
+                                    <th style="width: 5%; text-align: center;"><input type="checkbox"
+                                            id="select-all-competency"></th>
                                     <th style="width: 95%">Nama Kompetensi</th>
                                 </tr>
                             </thead>
                             <tbody id="competency-table-data">
                                 @foreach ($competencies as $competency)
                                     <tr>
-                                        <td style="text-align: center;"><input type="checkbox" name="selected_competencies[]" value="{{$competency->id}}"></th>
-                                        <td>{{$competency->name}}</td>
+                                        <td style="text-align: center;"><input type="checkbox"
+                                                name="selected_competencies[]" value="{{ $competency->id }}"></th>
+                                        <td>{{ $competency->name }}</td>
                                     </tr>
                                 @endforeach
 
@@ -67,9 +73,9 @@
 @section('js')
     <script>
         $(document).ready(function() {
-            $("#select-all-competency").click(function(e){
+            $("#select-all-competency").click(function(e) {
                 var table = $(e.target).closest('#competency-table');
-                $('td input:checkbox',table).prop('checked',this.checked).change();
+                $('td input:checkbox', table).prop('checked', this.checked).change();
             });
 
         });

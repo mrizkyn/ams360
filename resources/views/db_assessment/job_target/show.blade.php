@@ -23,8 +23,12 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="namaTargetJob">Nama Target Job</label>
-                            <input id="namaTargetJob" type="text" class="form-control @error('namaTargetJob') is-invalid @enderror" placeholder="Masukkan nama target job" name="namaTargetJob" autofocus value="{{ $targetJob->name }}" readonly>
-                            <small>*Note : Untuk Target Job yang memiliki nama yang sama namun dengan Kompetensi yang berbeda, Penamaan disesuaikan oleh perusahaan</small>
+                            <input id="namaTargetJob" type="text"
+                                class="form-control @error('namaTargetJob') is-invalid @enderror"
+                                placeholder="Masukkan nama target job" name="namaTargetJob" autofocus
+                                value="{{ $targetJob->name }}" readonly>
+                            <small>*Note : Untuk Target Job yang memiliki nama yang sama namun dengan Kompetensi yang
+                                berbeda, Penamaan disesuaikan oleh perusahaan</small>
                             @error('namaTargetJob')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -34,7 +38,7 @@
 
                         <label for="competency-table">Kompetensi</label>
                         <table class="table table-bordered" id="competency-table">
-                            <thead class="thead-dark">
+                            <thead>
                                 <tr>
                                     <th style="width: 95%">Nama Kompetensi</th>
                                 </tr>
@@ -43,9 +47,9 @@
                                 @foreach ($competencies as $competency)
                                     @if (in_array($competency->id, $targetJobCompetencies))
                                         <tr>
-                                            <td>{{$competency->name}}</td>
+                                            <td>{{ $competency->name }}</td>
                                         </tr>
-                                    @endif  
+                                    @endif
                                 @endforeach
                             </tbody>
                         </table>
@@ -65,9 +69,9 @@
 @section('js')
     <script>
         $(document).ready(function() {
-            $("#select-all-competency").click(function(e){
+            $("#select-all-competency").click(function(e) {
                 var table = $(e.target).closest('#competency-table');
-                $('td input:checkbox',table).prop('checked',this.checked).change();
+                $('td input:checkbox', table).prop('checked', this.checked).change();
             });
         });
     </script>

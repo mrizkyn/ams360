@@ -12,16 +12,17 @@
                     <form action="/assessment/departements/{{ $id }}" method="POST">
                         @csrf
                         <div class="form-group">
-                          <label for="name">Nama Departemen</label>
-                          @error('name')
-                          <div class="alert alert-danger" style="margin-top: 10px">{{$message}}</div>
-                          @enderror
-                          <input type="hidden" name="_method" value="PUT">
-                          <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" value="{{ $departement }}" name="name">
+                            <label for="name">Nama Departemen</label>
+                            @error('name')
+                                <div class="alert alert-danger" style="margin-top: 10px">{{ $message }}</div>
+                            @enderror
+                            <input type="hidden" name="_method" value="PUT">
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
+                                value="{{ $departement }}" name="name">
                         </div>
                         <div style="text-align: right">
                             <a href="/assessment/departements" class="btn btn-default">Kembali</a>
-                            <button type="submit" class="btn btn-primary">Ubah</button>
+                            <button type="submit" class="btn btn-info">Ubah</button>
                         </div>
                     </form>
                 </div>
@@ -29,4 +30,3 @@
         </div>
     </div>
 @stop
-

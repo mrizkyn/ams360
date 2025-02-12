@@ -12,15 +12,16 @@
                     <form action="/db-assessment/departements" method="POST">
                         @csrf
                         <div class="form-group">
-                          <label for="name">Nama Departemen</label>
-                          <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Nama Departemen" name="name" value="{{old('name')}}">
-                          @error('name')
-                            <div class="alert alert-danger" style="margin-top: 10px">{{$message}}</div>
-                          @enderror
+                            <label for="name">Nama Departemen</label>
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
+                                placeholder="Nama Departemen" name="name" value="{{ old('name') }}">
+                            @error('name')
+                                <div class="alert alert-danger" style="margin-top: 10px">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div style="text-align: right">
                             <a href="/db-assessment/departements" class="btn btn-default">Kembali</a>
-                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <button type="submit" class="btn btn-info">Simpan</button>
                         </div>
                     </form>
                 </div>

@@ -11,15 +11,15 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <a href="{{ route('competencies.create') }}" class="btn btn-success">Tambah Kompetensi</a> <br><br>
+                    <a href="{{ route('competencies.create') }}" class="btn btn-info">Tambah Kompetensi</a> <br><br>
                     <div class="table-responsive">
                         <table class="table" id="competencies-table">
-                            <thead class="thead-dark">
-                            <tr>
-                                <th scope="col" style="width: 5%;">No</th>
-                                <th scope="col" style="width: 30%;">Nama Kompetensi</th>
-                                <th style="width: 25%;">Action</th>
-                            </tr>
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="width: 5%;">No</th>
+                                    <th scope="col" style="width: 30%;">Nama Kompetensi</th>
+                                    <th style="width: 25%;">Action</th>
+                                </tr>
                             </thead>
                         </table>
                     </div>
@@ -28,7 +28,8 @@
         </div>
     </div>
 
-    <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -45,7 +46,7 @@
                         @csrf
                         @method('DELETE')
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
-                        <button type="submit" class="btn btn-primary">Ya</button>
+                        <button type="submit" class="btn btn-info">Ya</button>
                     </form>
                 </div>
             </div>
@@ -54,7 +55,7 @@
 @stop
 
 @section('css')
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css" />
 @stop
 
 @section('js')
@@ -65,19 +66,29 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: '{{ url("data/dbassessment-competency-data") }}'
+                    url: '{{ url('data/dbassessment-competency-data') }}'
                 },
-                columns: [
-                {data: 'DT_RowIndex' , name: 'DT_RowIndex'},
-                {data: 'name', name: 'name'},
-                {data: 'action', name:'action', orderable: false, searchable: false},
-            ],
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex'
+                    },
+                    {
+                        data: 'name',
+                        name: 'name'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
+                ],
             });
 
-            $('#competencies-table').DataTable().on('click' , 'button.delete' , function(){
-              var id = $(this).attr('id');
-              $('#myForm').attr('action' , '/db-assessment/competencies/'+id);
-              $('#delete-modal').modal('show')
+            $('#competencies-table').DataTable().on('click', 'button.delete', function() {
+                var id = $(this).attr('id');
+                $('#myForm').attr('action', '/db-assessment/competencies/' + id);
+                $('#delete-modal').modal('show')
             });
 
         });

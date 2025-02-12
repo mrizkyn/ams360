@@ -5,13 +5,13 @@
     <input class="form-control" id="namaPerusahaan" name="namaPerusahaan" type="text" readonly>
     </input>
 </div>
-<div class="form-group">
+{{-- <div class="form-group">
     <label for="bidangIndustri">
         Bidang Industri
     </label>
     <input class="form-control" id="bidangIndustri" name="bidangIndustri" type="text" readonly>
     </input>
-</div>
+</div> --}}
 <div class="form-group">
     <label for="alamatPerusahaan">
         Alamat Perusahaan
