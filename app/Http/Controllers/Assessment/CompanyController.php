@@ -30,7 +30,7 @@ class CompanyController extends Controller
     {
         // $business = BusinessField::orderBy('name', 'ASC')->get();
 
-        return view('assessment.company.create' , compact('business'));
+        return view('assessment.company.create');
     }
 
     /**

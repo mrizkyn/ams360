@@ -95,4 +95,16 @@ Route::middleware(['auth'])->prefix('data')->group(function () {
     Route::get('assessment-user-data', [UserController::class, 'usersData']);
     Route::get('assessment-user-detail/{id}', [UserController::class, 'userDetail']);
     Route::get('assessment-detail-participant/{id}', [ParticipantController::class, 'participantDetail']);
+    Route::get('assessment-project-participant-data/{companyId}', [ProjectController::class, 'getParticipantByCompany'])
+    ->name('project.getParticipantByCompany');
+    Route::get('assessment-assesion-data/{projectId}', [AssessmentController::class, 'getAssesionByProjectName'])
+    ->name('assessment.getAssesionByProjectName');
+
+    Route::get('assessment-assesion-type-data/{id}', [AssessmentController::class, 'getAssesionTypeByProjectParticipantId'])
+        ->name('assessment.getAssesionTypeByProjectParticipantId');
+
+    Route::get('assessment-question-data/{projectId}', [AssessmentController::class, 'getQuestionByProjectName'])
+        ->name('assessment.getQuestionByProjectName');
+    Route::get('assessment-project-data/{companyId}', [DashboardController::class, 'projectData'])
+    ->name('dashboard.getProjectsByCompany');
 });
