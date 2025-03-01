@@ -106,5 +106,5 @@ Route::middleware(['auth'])->prefix('data')->group(function () {
     Route::get('assessment-question-data/{projectId}', [AssessmentController::class, 'getQuestionByProjectName'])
         ->name('assessment.getQuestionByProjectName');
     Route::get('assessment-project-data/{companyId}', [DashboardController::class, 'projectData'])
-    ->name('dashboard.getProjectsByCompany');
+        ->name('dashboard.getProjectsByCompany');
 });

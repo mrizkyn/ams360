@@ -54,14 +54,14 @@ class Assessment
                     ]
                 ]);
 
-                // $event->menu->add([
-                //     'text'    => 'Laporan',
-                //     'icon'    => 'far fa-file-alt nav-icon',
-                //     'submenu' => [
-                //         ['text' => 'Assessment', 'icon' => 'nav-icon mr-4', 'url' => url('assessment/report-assessment')],
-                //         ['text' => 'Perpustakaan Kompetensi', 'icon' => 'nav-icon mr-4', 'url' => 'assessment/report-competence', 'active' => ['assessment/report-competence']],
-                //     ]
-                // ]);
+                $event->menu->add([
+                    'text'    => 'Laporan',
+                    'icon'    => 'far fa-file-alt nav-icon',
+                    'submenu' => [
+                        ['text' => 'Assessment', 'icon' => 'nav-icon mr-4', 'url' => url('assessment/report-assessment')],
+                        ['text' => 'Perpustakaan Kompetensi', 'icon' => 'nav-icon mr-4', 'url' => 'assessment/report-competence', 'active' => ['assessment/report-competence']],
+                    ]
+                ]);
             });
         } elseif ($request->user()->role == 'data entry') {
             Event::listen(BuildingMenu::class, function ($event) {
@@ -82,14 +82,14 @@ class Assessment
                 //     ]
                 // ]);
 
-                // $event->menu->add([
-                //     'text'    => 'Laporan',
-                //     'icon'    => 'far fa-file-alt nav-icon',
-                //     'submenu' => [
-                //         ['text' => 'Assessment', 'icon' => 'nav-icon mr-4', 'url' => url('assessment/report-assessment')],
-                //         ['text' => 'Perpustakaan Kompetensi', 'icon' => 'nav-icon mr-4', 'url' => 'assessment/report-competence', 'active' => ['assessment/report-competence']],
-                //     ]
-                // ]);
+                $event->menu->add([
+                    'text'    => 'Laporan',
+                    'icon'    => 'far fa-file-alt nav-icon',
+                    'submenu' => [
+                        ['text' => 'Assessment', 'icon' => 'nav-icon mr-4', 'url' => url('assessment/report-assessment')],
+                        ['text' => 'Perpustakaan Kompetensi', 'icon' => 'nav-icon mr-4', 'url' => 'assessment/report-competence', 'active' => ['assessment/report-competence']],
+                    ]
+                ]);
             });
         }
 
