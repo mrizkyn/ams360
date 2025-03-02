@@ -46,6 +46,16 @@ class Assessment
                         ['text' => 'Assessment By Rater', 'icon' => 'nav-icon mr-4', 'url'],
                     ]
                 ]);
+
+                $event->menu->add([
+                    'text'    => 'Laporan',
+                    'icon'    => 'far fa-file-alt nav-icon',
+                    'submenu' => [
+                        ['text' => 'Assessment', 'icon' => 'nav-icon mr-4', 'url' => url('assessment/report-assessment')],
+                        ['text' => 'Perpustakaan Kompetensi', 'icon' => 'nav-icon mr-4', 'url' => 'assessment/report-competence', 'active' => ['assessment/report-competence']],
+                    ]
+                ]);
+
                 $event->menu->add([
                     'text'    => 'Setting',
                     'icon'    => 'fa fa-cog nav-icon',

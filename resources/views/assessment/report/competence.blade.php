@@ -71,8 +71,8 @@
                                 class="form-control @error('position') is-invalid @enderror">
                                 <option value="0" disabled>== Pilih Jabatan ==</option>
                                 {{-- @foreach ($positions as $position)
-                            <option value="{{ $position->id }}">{{ $position->name }}</option>
-                            @endforeach --}}
+                                    <option value="{{ $position->id }}">{{ $position->name }}</option>
+                                @endforeach --}}
                             </select>
                             @error('position')
                                 <div class="alert alert-danger" style="margin-top: 10px">Departemen belum di pilih</div>
@@ -296,12 +296,12 @@
             })
 
             $('select#departement').change(function() {
-                var company_id = $('select#company').val()
-                var division_id = $('select#division').val()
-                var departement_id = $(this).val()
-                $('select#position').val('0').trigger('change');
+                var company_id = $('select#company').val();
+                var division_id = $('select#division').val();
+                var departement_id = $(this).val();
 
                 $('select#position').attr("disabled", "disabled");
+
                 $.ajax({
                     url: '/data/assessment-report-position',
                     data: {
@@ -311,27 +311,24 @@
                     },
                     success: function(result) {
                         if (result.status == 0) {
-                            // console.log(result);
-                            $('select#position').empty()
+                            $('select#position').empty();
                             $('<option>').val(null).text('== Pilih Jabatan ==').appendTo(
-                                'select#position')
+                                'select#position');
                             $('<option>').val(null).text(result.message).appendTo(
-                                'select#position')
+                                'select#position');
                         } else {
-                            // console.log(result);
                             $('select#position').removeAttr('disabled');
-                            $('select#position').empty()
+                            $('select#position').empty();
                             $('<option>').val(null).text('== Pilih Jabatan ==').appendTo(
-                                'select#position')
+                                'select#position');
                             result.forEach(element => {
-                                // console.log(element);
                                 $('<option>').val(element.position_id).text(element
-                                    .position).appendTo('select#position')
+                                    .position).appendTo('select#position');
                             });
                         }
                     }
-                })
-            })
+                });
+            });
 
             if ($('select#competence').val() !== null) {
                 $('select#company').removeAttr('disabled');

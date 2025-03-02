@@ -20,6 +20,7 @@ class CreateProjectParticipantResultsTable extends Migration
             $table->string('type');
             $table->double('value');
             $table->double('gap');
+            $table->double('loa')->nullable();
             $table->timestamps();
         });
     }

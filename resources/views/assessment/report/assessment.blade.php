@@ -5,84 +5,92 @@
 @stop
 
 @section('content')
-    <form id="report-assessment-form" action="report-assessment" method="POST">
-        <div class="tab">
-            @csrf
-            <div class="form-group">
-                <label for="company">Nama Perusahaan</label>
-                <select name="company_id" id="company_id" class="form-control" value="{{ old('company_id') }}">
-                    <option value="" selected disabled>Pilih Nama Perusahaan</option>
-                    @foreach ($companies as $company)
-                        <option value="{{ $company->id }}">{{ $company->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="company">Nama Proyek</label>
-                <select name="project_id" id="project_id" class="form-control" value="{{ old('project_id') }}">
-                    <option value="" selected disabled>Pilih Nama Proyek</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="company">Nama Asesi</label>
-                <select name="project_participant_id" id="participant_id" class="form-control"
-                    value="{{ old('participant_id') }}">
-                    <option value="" selected disabled>Pilih Nama Asesi</option>
-                </select>
-            </div>
-
-            <div class="form-group" id="type-doc">
-                <label for="type">Ekstensi</label>
-                <select name="type" class="form-control">
-                    <option value="pdf">PDF</option>
-                    <option value="docx" selected>DOCX</option>
-                </select>
-            </div>
-
-            <div class="chart" id="summary_chart"></div>
-            <div class="chart" id="competency_chart"></div>
-            <div class="chart" id="key_behavior_chart"></div>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Form Laporan Assessment</h3>
         </div>
-        <div class="tab">
-            <div class="form-group">
-                <label for="">Hasil</label>
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th class="text-center">Kompetensi</th>
-                            <th class="text-center" style="width:10%">Gap</th>
-                        </tr>
-                    </thead>
+        <div class="card-body">
+            <form id="report-assessment-form" action="report-assessment" method="POST">
+                <div class="tab">
+                    @csrf
+                    <div class="form-group">
+                        <label for="company">Nama Perusahaan</label>
+                        <select name="company_id" id="company_id" class="form-control" value="{{ old('company_id') }}">
+                            <option value="" selected disabled>Pilih Nama Perusahaan</option>
+                            @foreach ($companies as $company)
+                                <option value="{{ $company->id }}">{{ $company->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Nama Proyek</label>
+                        <select name="project_id" id="project_id" class="form-control" value="{{ old('project_id') }}">
+                            <option value="" selected disabled>Pilih Nama Proyek</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Nama Asesi</label>
+                        <select name="project_participant_id" id="participant_id" class="form-control"
+                            value="{{ old('participant_id') }}">
+                            <option value="" selected disabled>Pilih Nama Asesi</option>
+                        </select>
+                    </div>
 
-                    <tbody id="result-data">
+                    <div class="form-group" id="type-doc">
+                        <label for="type">Ekstensi</label>
+                        <select name="type" class="form-control">
+                            <option value="pdf">PDF</option>
+                            <option value="docx" selected>DOCX</option>
+                        </select>
+                    </div>
 
-                    </tbody>
-                </table>
+                    <div class="chart" id="summary_chart"></div>
+                    <div class="chart" id="competency_chart"></div>
+                    <div class="chart" id="key_behavior_chart"></div>
+                </div>
+                <div class="tab">
+                    <div class="form-group">
+                        <label for="">Hasil</label>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Kompetensi</th>
+                                    <th class="text-center" style="width:10%">Gap</th>
+                                    <th class="text-center" style="width:10%">LoA</th>
+                                </tr>
+                            </thead>
 
-            </div>
+                            <tbody id="result-data">
 
-            <div class="form-group">
-                <label for="">Summary</label>
-                <textarea name="summary" class="form-control" rows="4"></textarea>
-            </div>
+                            </tbody>
+                        </table>
 
-            <div class="form-group">
-                <label for="">Saran</label>
-                <textarea name="suggestion" class="form-control" rows="4"></textarea>
-            </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Summary</label>
+                        <textarea name="summary" class="form-control" rows="4"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Saran</label>
+                        <textarea name="suggestion" class="form-control" rows="4"></textarea>
+                    </div>
+                </div>
+                <div style="overflow:auto;">
+                    <div style="float:right;">
+                        <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+                        <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+                    </div>
+                </div>
+
+                <div style="text-align:center;margin-top:40px;">
+                    <span class="step"></span>
+                    <span class="step"></span>
+                </div>
+            </form>
         </div>
-        <div style="overflow:auto;">
-            <div style="float:right;">
-                <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
-                <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
-            </div>
-        </div>
-
-        <div style="text-align:center;margin-top:40px;">
-            <span class="step"></span>
-            <span class="step"></span>
-        </div>
-    </form>
+    </div>
 @endsection
 
 @section('css')
@@ -161,7 +169,7 @@
         $(document).ready(function() {
             $('#company_id').change(function() {
                 $.get("{{ url('data/assessment-project-data-by-company/') }}" + "/" + $("#company_id")
-                .val(),
+                    .val(),
                     function(data) {
                         $('#project_id').empty();
                         $('#project_id').append(
@@ -183,7 +191,7 @@
                         data.forEach(participant => {
                             $('#participant_id').append(
                                 `<option value="${participant.id}">${participant.name}</option>`
-                                );
+                            );
                         });
                     });
             });
@@ -226,9 +234,10 @@
                         data.forEach(result => {
                             $('#result-data').append(
                                 `<tr>
-                        <td>${result.name}</td>
-                        <td>${result.gap.toFixed(2)}</td>
-                    </tr>`
+                    <td>${result.name}</td>
+                    <td>${result.gap.toFixed(2)}</td>
+                    <td>${result.loa.toFixed(2) ?? '-'}</td>
+                </tr>`
                             )
                         });
                     });

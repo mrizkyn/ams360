@@ -39,23 +39,53 @@ Route::middleware(['auth', 'assessment', 'admin'])->prefix('assessment')->group(
     ]);
 });
 
-Route::middleware(['auth', 'assessment'])->prefix('assessment')->group(function () {
-    Route::get('dashboard', [DashboardController::class, 'index']);
+Route::prefix('assessment')->middleware(['auth', 'assessment'])->group(function () {
+    Route::controller(DashboardController::class)->group(function () {
+        Route::get('dashboard', 'index');
+    });
+
     Route::resource('projects', ProjectController::class);
-    Route::get('projects/{id}/question-pdf', [ProjectController::class, 'printQuestionPDF']);
-    Route::get('projects/{id}/question-word', [ProjectController::class, 'printQuestionWord']);
-    Route::resource('participants', ParticipantController::class, ['as' => 'assessment']);
+
+    Route::controller(ProjectController::class)->group(function () {
+        Route::get('projects/{id}/question-pdf', 'printQuestionPDF');
+        Route::get('projects/{id}/question-word', 'printQuestionWord');
+        Route::get('projects/{id}/question-docx', 'printQuestionPDF');
+    });
+
+    Route::resource('participants', ParticipantController::class);
     Route::resource('companies', CompanyController::class);
-    Route::get('assessments', [AssessmentController::class, 'index']);
-    Route::post('assessments', [AssessmentController::class, 'create']);
-    Route::get('project-participants/{id}', [ProjectParticipantController::class, 'show']);
-    Route::put('project-participants/{id}', [ProjectParticipantController::class, 'update']);
+
+    Route::controller(AssessmentController::class)->group(function () {
+        Route::get('assessments', 'index');
+        Route::post('assessments', 'create');
+    });
+
+    Route::controller(ProjectParticipantController::class)->group(function () {
+        Route::get('project-participants/{id}', 'show');
+        Route::get('project-participants/{id}/edit', 'edit');
+        Route::put('project-participants/{id}', 'update');
+    });
+
+    Route::controller(ProjectParticipantRespondentController::class)->group(function () {
+        Route::get('project-participant-respondents/{id}', 'show');
+        Route::get('project-participant-respondents/{id}/edit', 'edit');
+        Route::put('project-participant-respondents/{id}', 'update');
+    });
+
     Route::resource('development-activities', DevelopmentActivityController::class);
-    Route::get('report-assessment', [ReportAssessmentController::class, 'index']);
-    Route::post('report-assessment-data', [ReportAssessmentController::class, 'getAssessmentSumarry']);
-    Route::post('report-assessment', [ReportAssessmentController::class, 'getAssessmentReport']);
-    Route::get('report-competence', [ReportController::class, 'index']);
+
+    Route::controller(ReportAssessmentController::class)->group(function () {
+        Route::get('report-assessment', 'index');
+        Route::post('report-assessment-data', 'getAssessmentSumarry');
+        Route::post('report-assessment', 'getAssessmentReport');
+        Route::get('report-assessment-document/{document}', 'getAssssmentDocument');
+    });
+
+    Route::controller(ReportController::class)->group(function () {
+        Route::get('report-competence', 'index');
+    });
 });
+
 
 Route::middleware(['auth', 'db.assessment'])->prefix('db-assessment')->group(function () {
     Route::get('dashboard', [DbDashboardController::class, 'index']);
@@ -78,33 +108,138 @@ Route::middleware(['auth', 'db.assessment', 'admin'])->prefix('db-assessment')->
     ]);
 });
 
-Route::middleware(['auth'])->prefix('data')->group(function () {
-    Route::get('assessment-project-data', [ProjectController::class, 'projectData']);
-    Route::get('assessment-company-data', [CompanyController::class, 'companyData']);
-    Route::get('dbassessment-competency-data', [DbCompetencyController::class, 'competencyData']);
-    Route::get('dbassessment-company-data', [DbCompanyController::class, 'companyData']);
-    Route::get('assessment-participant-data', [ParticipantController::class, 'participantData']);
-    Route::get('assessment-competency-result-by-project-participant/{projectParticipantId}', [ReportAssessmentController::class, 'getAssessmentCompetencyResult']);
-    Route::get('assessment-key-behavior-result-by-project-participant/{projectParticipantId}', [ReportAssessmentController::class, 'getAssessmentKeyBehaviorResult']);
-    Route::get('assessment-position-data', [PositionController::class, 'positionData']);
-    Route::get('assessment-division-data', [DivisionController::class, 'divisionData']);
-    Route::get('assessment-development-data', [DevelopmentSourceController::class, 'developmentData']);
-    Route::get('assessment-departement-data', [DepartementController::class, 'departementData']);
-    Route::get('assessment-behavior-data/{id}', [BehaviorController::class, 'behaviorData']);
-    Route::get('assessment-definition-data/{id}', [CompetenceController::class, 'definitionData']);
-    Route::get('assessment-user-data', [UserController::class, 'usersData']);
-    Route::get('assessment-user-detail/{id}', [UserController::class, 'userDetail']);
-    Route::get('assessment-detail-participant/{id}', [ParticipantController::class, 'participantDetail']);
-    Route::get('assessment-project-participant-data/{companyId}', [ProjectController::class, 'getParticipantByCompany'])
-    ->name('project.getParticipantByCompany');
-    Route::get('assessment-assesion-data/{projectId}', [AssessmentController::class, 'getAssesionByProjectName'])
-    ->name('assessment.getAssesionByProjectName');
+Route::prefix('data')->middleware(['auth'])->group(function () {
+    Route::controller(ProjectController::class)->group(function () {
+        Route::get('assessment-project-data', 'projectData');
+        Route::get('assessment-project-participant-data/{companyName}', 'getParticipantByCompany');
+    });
 
-    Route::get('assessment-assesion-type-data/{id}', [AssessmentController::class, 'getAssesionTypeByProjectParticipantId'])
-        ->name('assessment.getAssesionTypeByProjectParticipantId');
+    Route::controller(DepartementController::class)->group(function () {
+        Route::get('assessment-departement-data', 'departementData');
+    });
 
-    Route::get('assessment-question-data/{projectId}', [AssessmentController::class, 'getQuestionByProjectName'])
-        ->name('assessment.getQuestionByProjectName');
-    Route::get('assessment-project-data/{companyId}', [DashboardController::class, 'projectData'])
-        ->name('dashboard.getProjectsByCompany');
+    Route::controller(DivisionController::class)->group(function () {
+        Route::get('assessment-division-data', 'divisionData');
+    });
+
+    Route::controller(CompetenceController::class)->group(function () {
+        Route::get('assessment-definition-data/{id}', 'definitionData')->whereNumber('id');
+    });
+
+    Route::controller(BehaviorController::class)->group(function () {
+        Route::get('assessment-behavior-data/{id}', 'behaviorData')->whereNumber('id');
+    });
+
+    Route::controller(CompanyController::class)->group(function () {
+        Route::get('assessment-company-data', 'companyData');
+    });
+
+    Route::controller(DbCompetencyController::class)->group(function () {
+        Route::get('dbassessment-competency-data', 'competencyData');
+    });
+
+    Route::controller(CompanyController::class)->group(function () {
+        Route::get('dbassessment-company-data', 'companyData');
+    });
+
+    Route::controller(ParticipantController::class)->group(function () {
+        Route::get('assessment-participant-data', 'participantData');
+        Route::get('assessment-detail-participant/{id}', 'participantDetail');
+    });
+
+    Route::controller(ReportController::class)->group(function () {
+        Route::get('assessment-competence-pdf', 'competencePDF');
+        Route::get('assessment-competence-doc', 'competenceDOC');
+    });
+
+    Route::controller(ParticipantController::class)->group(function () {
+        Route::get('dbassessment-particpant-data', 'participantData');
+    });
+
+    Route::controller(PositionController::class)->group(function () {
+        Route::get('assessment-position-data', 'positionData');
+    });
+
+    Route::controller(TargetJobController::class)->group(function () {
+        Route::get('dbassessment-targetJob-data', 'targetJobData');
+    });
+
+    Route::controller(AssessmentController::class)->group(function () {
+        Route::get('assessment-assesion-data/{projectName}', 'getAssesionByProjectName');
+        Route::get('assessment-assesion-type-data/{id}', 'getAssesionTypeByProjectParticipantId');
+        Route::get('assessment-question-data/{projectName}', 'getQuestionByProjectName');
+    });
+
+    Route::controller(DevelopmentSourceController::class)->group(function () {
+        Route::get('assessment-development-data', 'developmentData');
+    });
+
+    Route::controller(DevelopmentActivityController::class)->group(function () {
+        Route::get('assessment-development-activity-data', 'developmentActivityData');
+    });
+
+    Route::controller(AssessmentController::class)->group(function () {
+        Route::get('dbassessment-competence-data', 'competenceData');
+        Route::get('dbassessment-participants-data', 'participantsData');
+        Route::get('dbassessment-company-name', 'companyData');
+    });
+
+    Route::controller(DashboardController::class)->group(function () {
+        Route::get('assessment-project-data/{companyId}', 'getProjectsByCompanyId');
+        Route::get('assessment-projectparticipant-data/{projectId}', 'getParticipantByProjectId');
+    });
+
+    Route::controller(DashboardController::class)->group(function () {
+        Route::get('dbassessment-project-data', 'projectData');
+    });
+
+    Route::controller(ReportAssessmentController::class)->group(function () {
+        Route::get('assessment-project-data-by-company/{companyName}', 'getProjectByCompanyName');
+        Route::get('assessment-participant-data-by-project/{projectName}', 'getParticipantByProjectName');
+        Route::get('assessment-competency-result-by-project-participant/{projectParticipantId}', 'getAssessmentCompetencyResult');
+        Route::get('assessment-key-behavior-result-by-project-participant/{projectParticipantId}', 'getAssessmentKeyBehaviorResult');
+    });
+
+    Route::controller(UserController::class)->group(function () {
+        Route::get('assessment-user-data', 'usersData');
+        Route::get('assessment-user-detail/{id}', 'userDetail');
+    });
+
+    Route::controller(ComparisonController::class)->group(function () {
+        Route::get('dbassessment-target-job-by-company', 'getTargetJobByCompany');
+        Route::get('dbassessment-recommendation-type-by-company', 'getRecommendationTypeByCompany');
+        Route::post('dbassessment-comparison', 'getComparisonData');
+    });
+
+    Route::controller(RecapPrintController::class)->group(function () {
+        Route::get('dbassessment-project-data/{id}', 'show');
+        Route::post('dbassessment-participant-values', 'getParticipantValues');
+        Route::post('dbassessment-recommendation-progress', 'getRecommendationProgress');
+    });
+
+    Route::controller(IndustrialSectorController::class)->group(function () {
+        Route::get('dbassessment-business-fields', 'sectorData');
+    });
+
+    Route::controller(DepartementController::class)->group(function () {
+        Route::get('dbassessment-departement-data', 'departementData');
+    });
+
+    Route::controller(DivisionController::class)->group(function () {
+        Route::get('dbassessment-division-data', 'divisionData');
+    });
+
+    Route::controller(RecommendationController::class)->group(function () {
+        Route::get('dbassessment-recommendations', 'recommendationData');
+    });
+
+    Route::controller(DbPositionController::class)->group(function () {
+        Route::get('dbassessment-position-data', 'positionData');
+    });
+
+    Route::controller(ReportController::class)->group(function () {
+        Route::get('assessment-report-division', 'getDivision');
+        Route::get('assessment-report-departement', 'getDepartement');
+        Route::get('assessment-report-position', 'getPosition');
+    });
 });

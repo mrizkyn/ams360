@@ -36,12 +36,9 @@ class ReportAssessmentController extends Controller
                     $cpAll = $this->getCalculateAll($request->project_participant_id, $question->key_behavior_id, 'CP');
                     $cpr = $this->getCalculate($request->project_participant_id, $question->key_behavior_id, 'CPR');
                     $gap = $cpAll - $cpr;
+                    $loa = 100 - ($this->getStandardDeviation([$cpSelf, $cpSuper, $cpOther, $cpAll]) * (100 / 3.8));
 
-                    $this->saveProjectParticipantResult($request->project_participant_id, $question->key_behavior_id, 'CPR', $cpr, $gap);
-                    $this->saveProjectParticipantResult($request->project_participant_id, $question->key_behavior_id, 'CP All', $cpAll, $gap);
-                    $this->saveProjectParticipantResult($request->project_participant_id, $question->key_behavior_id, 'CP Other', $cpOther, $gap);
-                    $this->saveProjectParticipantResult($request->project_participant_id, $question->key_behavior_id, 'CP Super', $cpSuper, $gap);
-                    $this->saveProjectParticipantResult($request->project_participant_id, $question->key_behavior_id, 'Self', $cpSelf, $gap);
+                    $this->saveProjectParticipantResult($request->project_participant_id, $question->key_behavior_id, 'CPR', $cpr, $gap, $loa);
                     break;
                 case '2':
                     $cpSelf = $this->getCalculateSelf($request->project_participant_id, $question->key_behavior_id, 'CP');
@@ -50,12 +47,9 @@ class ReportAssessmentController extends Controller
                     $cpAll = $this->getCalculateAll($request->project_participant_id, $question->key_behavior_id, 'CP');
                     $fpr = $this->getCalculate($request->project_participant_id, $question->key_behavior_id, 'FPR');
                     $gap = $cpAll - $fpr;
+                    $loa = 100 - ($this->getStandardDeviation([$cpSelf, $cpSuper, $cpOther, $cpAll]) * (100 / 3.8));
 
-                    $this->saveProjectParticipantResult($request->project_participant_id, $question->key_behavior_id, 'FPR', $fpr, $gap);
-                    $this->saveProjectParticipantResult($request->project_participant_id, $question->key_behavior_id, 'CP All', $cpAll, $gap);
-                    $this->saveProjectParticipantResult($request->project_participant_id, $question->key_behavior_id, 'CP Other', $cpOther, $gap);
-                    $this->saveProjectParticipantResult($request->project_participant_id, $question->key_behavior_id, 'CP Super', $cpSuper, $gap);
-                    $this->saveProjectParticipantResult($request->project_participant_id, $question->key_behavior_id, 'Self', $cpSelf, $gap);
+                    $this->saveProjectParticipantResult($request->project_participant_id, $question->key_behavior_id, 'FPR', $fpr, $gap, $loa);
                     break;
                 case '3':
                     $cfSelf = $this->getCalculateSelf($request->project_participant_id, $question->key_behavior_id, 'CF');
@@ -64,12 +58,9 @@ class ReportAssessmentController extends Controller
                     $cfAll = $this->getCalculateAll($request->project_participant_id, $question->key_behavior_id, 'CF');
                     $cfr = $this->getCalculate($request->project_participant_id, $question->key_behavior_id, 'CFR');
                     $gap = $cfAll - $cfr;
+                    $loa = 100 - ($this->getStandardDeviation([$cfSelf, $cfSuper, $cfOther, $cfAll]) * (100 / 3.8));
 
-                    $this->saveProjectParticipantResult($request->project_participant_id, $question->key_behavior_id, 'CFR', $cfr, $gap);
-                    $this->saveProjectParticipantResult($request->project_participant_id, $question->key_behavior_id, 'CF All', $cfAll, $gap);
-                    $this->saveProjectParticipantResult($request->project_participant_id, $question->key_behavior_id, 'CF Other', $cfOther, $gap);
-                    $this->saveProjectParticipantResult($request->project_participant_id, $question->key_behavior_id, 'CF Super', $cfSuper, $gap);
-                    $this->saveProjectParticipantResult($request->project_participant_id, $question->key_behavior_id, 'Self', $cfSelf, $gap);
+                    $this->saveProjectParticipantResult($request->project_participant_id, $question->key_behavior_id, 'CFR', $cfr, $gap, $loa);
                     break;
                 case '4':
                     $cfSelf = $this->getCalculateSelf($request->project_participant_id, $question->key_behavior_id, 'CF');
@@ -78,12 +69,9 @@ class ReportAssessmentController extends Controller
                     $cfAll = $this->getCalculateAll($request->project_participant_id, $question->key_behavior_id, 'CF');
                     $ffr = $this->getCalculate($request->project_participant_id, $question->key_behavior_id, 'FFR');
                     $gap = $cfAll - $ffr;
+                    $loa = 100 - ($this->getStandardDeviation([$cfSelf, $cfSuper, $cfOther, $cfAll]) * (100 / 3.8));
 
-                    $this->saveProjectParticipantResult($request->project_participant_id, $question->key_behavior_id, 'FFR', $ffr, $gap);
-                    $this->saveProjectParticipantResult($request->project_participant_id, $question->key_behavior_id, 'CF All', $cfAll, $gap);
-                    $this->saveProjectParticipantResult($request->project_participant_id, $question->key_behavior_id, 'CF Other', $cfOther, $gap);
-                    $this->saveProjectParticipantResult($request->project_participant_id, $question->key_behavior_id, 'CF Super', $cfSuper, $gap);
-                    $this->saveProjectParticipantResult($request->project_participant_id, $question->key_behavior_id, 'Self', $cfSelf, $gap);
+                    $this->saveProjectParticipantResult($request->project_participant_id, $question->key_behavior_id, 'FFR', $ffr, $gap, $loa);
                     break;
             };
         }
@@ -92,7 +80,7 @@ class ReportAssessmentController extends Controller
         ->join('key_behaviors', 'project_participant_results.key_behavior_id', '=', 'key_behaviors.id')
         ->join('competencies', 'key_behaviors.competence_id', '=', 'competencies.id')
         ->select('competencies.name')
-        ->selectRaw('avg(project_participant_results.gap) as gap')
+        ->selectRaw('avg(project_participant_results.gap) as gap, avg(project_participant_results.loa) as loa')
         ->where('project_participant_id', $request->project_participant_id)
         ->groupBy('name')
         ->orderBy('name')
@@ -100,6 +88,7 @@ class ReportAssessmentController extends Controller
 
         return $results;
     }
+
 
     public function getAssessmentReport(Request $request){
         $competencyCharts = json_decode($request->competencyCharts);
@@ -324,6 +313,8 @@ class ReportAssessmentController extends Controller
         $table4->addCell(Converter::cmToTwip(10.5), ['borderLeftColor' => 'ffffff', 'borderLeftSize' => 0])->addText('Seberapa besar kesenjangan antara efektivitas/frekuensi kunci perilaku yang dipersyaratkan (all) dengan efektivitas/frekuensi kunci perilaku yang ditampilkan saat ini (all)', null, ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::LEFT]);
         $section2->addTextBreak();
 
+        //Loa Addrow
+
         $section2->addText('Key Behaviours Report', ['bold' => true, "italic" => true, 'size' => 11]);
         $table3 = $section2->addTable(['cellMarginLeft' => 80, 'cellMarginRight' => 80, 'alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::CENTER, 'borderSize' => 6, 'borderColor' => '000000']);
         $table3->addRow(null, ['tblHeader' => true, 'cantSplit' => true]);
@@ -366,6 +357,9 @@ class ReportAssessmentController extends Controller
             $textRun = $table3->addCell(Converter::cmToTwip(2.03), ['vMerge' => 'restart'])->addTextRun();
             $textRun->addText('Gap ', ['italic' => true]);
             $textRun->addText('= '.number_format((float)$assessmentSummary[$competency]->gap, 2, '.', ''));
+            $textRun->addTextBreak(); // Tambahkan jarak
+            $textRun->addText('LOA ', ['italic' => true]);
+            $textRun->addText('= '.number_format((float)$assessmentSummary[$competency]->loa, 2, '.', ''));
 
             foreach ($ProjectParticipantResult as $key => $result){
                 $keys = collect($keyBehaviorResults)->keys();
@@ -394,6 +388,9 @@ class ReportAssessmentController extends Controller
                 $textRun = $table3->addCell(Converter::cmToTwip(2.03), ['vMerge' => 'restart'])->addTextRun();
                 $textRun->addText('Gap ', ['italic' => true]);
                 $textRun->addText('= '.number_format((float)$result->gap, 2, '.', ''));
+                // $textRun->addTextBreak();
+                // $textRun->addText('LOA ', ['italic' => true]);
+                // $textRun->addText('= '.number_format((float)$assessmentSummary[$competency]->loa, 2, '.', ''));
 
                 $keybehavior++;
                 $no++;
@@ -463,6 +460,22 @@ class ReportAssessmentController extends Controller
 
     public function getAssssmentDocument($document){
         return response()->download(storage_path($document));
+    }
+
+    public function getLoAResult($project_participant_id, $competency_id) {
+        $types = ['CPR', 'CP All', 'CP Other', 'CP Super', 'Self'];
+        $values = [];
+
+        foreach ($types as $type) {
+            $values[] = $this->getAverageResult($project_participant_id, $competency_id, $type);
+        }
+
+        // Menghitung standar deviasi LoA
+        $mean = array_sum($values) / count($values);
+        $variance = array_sum(array_map(fn($x) => pow($x - $mean, 2), $values)) / count($values);
+        $stdDev = sqrt($variance);
+
+        return $stdDev;
     }
 
     public function getAssessmentCompetencyResult($projectParticipantId){
@@ -615,15 +628,25 @@ class ReportAssessmentController extends Controller
         return $average == null ? 0 : $average;
     }
 
-    public function saveProjectParticipantResult($project_participant_id, $key_behavior_id, $type, $value, $gap){
+    public function saveProjectParticipantResult($project_participant_id, $key_behavior_id, $type, $value, $gap, $loa){
         return ProjectParticipantResult::create([
             'project_participant_id' => $project_participant_id,
             'key_behavior_id' => $key_behavior_id,
             'type' => $type,
             'value' => $value,
-            'gap' => $gap
+            'gap' => $gap,
+            'loa' => $loa
         ]);
     }
+
+    private function getStandardDeviation($values) {
+        $mean = array_sum($values) / count($values);
+        $sumSquaredDiffs = array_reduce($values, function ($carry, $value) use ($mean) {
+            return $carry + pow($value - $mean, 2);
+        }, 0);
+        return sqrt($sumSquaredDiffs / count($values));
+    }
+
 
     public function getProjectByCompanyName($companyId){
         return Project::where(['company_id' => $companyId])->orderBy('name')->get();
